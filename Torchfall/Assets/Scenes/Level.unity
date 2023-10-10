@@ -534,9 +534,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5166645241787647691, guid: c48fca0220770544e860912b34e3f370, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7bfd2441c83afb74f97ea512b8e2984b, type: 2}
     - target: {fileID: 8700258768234446554, guid: c48fca0220770544e860912b34e3f370, type: 3}
       propertyPath: m_Name
-      value: 1
+      value: Oppie
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
