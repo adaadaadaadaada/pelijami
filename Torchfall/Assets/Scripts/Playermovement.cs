@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Animator animator;
+
     private float horizontal;
     private float speed = 6f;
     private float jumpingPower = 16f;
@@ -21,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private AudioSource jumpSfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        animator.SetFloat("Speed", Mathf.Abs(speed));
+
         if (isGrounded() && !Input.GetButton("Jump"))
         {
             doubleJump = false;
@@ -39,11 +44,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            animator.SetBool("IsJumping", true);
+            jumpSfx.Play();
+
             if (isGrounded() || doubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
 
                 doubleJump = !doubleJump;
+
+                jumpSfx.Play();
+                animator.SetBool("IsJumping", true);
             }
 
         }
@@ -51,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
@@ -75,7 +87,15 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        animator.SetBool("IsJumping", false);
     }
+    //public void OnLanding()
+    //{
+       // if (isGrounded())
+        //{
+           // animator.SetBool("IsJumping", false);
+        //}
+    //}
     private void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
