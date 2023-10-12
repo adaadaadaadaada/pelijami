@@ -9,7 +9,9 @@ using UnityEngine.UI;
 public class Fading : MonoBehaviour
 {
     public GameObject blackoutimage;
+    public GameObject loseScreen;
     public Fading maincanvas;
+    public GameObject infobox;
     
     public Rigidbody playerRb;
 
@@ -24,10 +26,7 @@ public class Fading : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FadeBlackOutImage(false));
     }
-    public void StopPlayer()
-    {
-        playerRb.isKinematic = true;
-    }
+    
     public void LightOff()
     {
         StopAllCoroutines();
@@ -39,11 +38,24 @@ public class Fading : MonoBehaviour
         
 
     }
+    public void EnableGameOverMenu()
+    {
+        loseScreen.SetActive(true);
+    }
+    public void EnableInfoBox()
+    {
+        infobox.SetActive(true);   
+    }
+    public void DisabledInfoBox()
+    {
+        infobox.SetActive(false);
+    }
     private void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
             maincanvas.LightOff();
+            DisabledInfoBox();
         }
     }
     void OnTriggerEnter2D(Collider2D col)
@@ -51,7 +63,7 @@ public class Fading : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             maincanvas.lightOn();
-
+            EnableInfoBox();
         }
     }
 
@@ -78,7 +90,7 @@ public class Fading : MonoBehaviour
 
             if (objectColor.a >= 1f)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                EnableGameOverMenu();
             }
         }
         else
