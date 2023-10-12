@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 6f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
-
+    
     private bool doubleJump;
 
     private bool canDash = true;
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
